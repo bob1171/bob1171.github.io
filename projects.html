@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    body {
+      font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      font-size:20px;
+    }
+    ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    text-align: center;
+}
+img {
+    display: block;
+    margin: auto;
+    width: 200px;
+}
+li {
+  float: left;
+  padding:2px;
+}
+    </style>
+  </head>
+  <body>
+    <button onclick="go()">Click</button>
+    <ul id="container">
+    </ul>
+    <script>
+      function go() {
+var username='bob1171';
+var projectNum;
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.open('GET', 'https://api.scratch.mit.edu/users/' + username + "/projects" , true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            var parsedJSON = JSON.parse(xmlhttp.responseText);
+            projectNum = parsedJSON.length;
+            iterateThrough(projectNum, username);
+        }
+    }}
+ function iterateThrough(projectNum, username) {
+   console.log(projectNum);
+   a(projectNum,username,0);
+}
+function a (projectNum, username, i) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open('GET', 'https://api.scratch.mit.edu/users/' + username + "/projects?offset=" + i , true);
+   xmlHttp.send();
+  xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          var parsedJSON = JSON.parse(xmlHttp.responseText);
+          console.log(parsedJSON);
+          var li = document.createElement("LI");
+          var center = document.createElement("CENTER");
+          var thumbnailImg = document.createElement("IMG");
+          var titleDiv = document.createElement("DIV");
+          var al = document.createElement("A");
+          var url = "https://scratch.mit.edu/projects/" + (parsedJSON[i].id);
+          al.href = url;
+          var image = parsedJSON[i].image;
+          var title = parsedJSON[i].title;
+          //Adds the ...
+          if (title.length > 15) {
+            title = title.substring(0,15) + "...";
+          }
+          
+          thumbnailImg.class = "thumbnail";
+          titleDiv.class="title";
+          thumbnailImg.src = image;
+          titleDiv.appendChild(document.createTextNode(title));
+          al.appendChild(thumbnailImg);
+          al.appendChild(titleDiv);
+          center.appendChild(al);
+          li.appendChild(center);
+        document.getElementById("container").appendChild(li);
+        i++;
+        if (i == projectNum) {
+          console.log("done");
+        }
+        else {
+          a(projectNum, username, i);
+        }
+      }
+    }
+}
+    </script>
+    <p>Made by packersrulegopack</p>
+    <a href='https://bob1171.github.io/'>return to home</a>
+  </body>
+</html>

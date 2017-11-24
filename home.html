@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>bob1171</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="icon.png" href="icon.png" type="image/x-icon">
+<style>
+button {
+    border-radius: 5px;
+    background: #73AD21; 
+    width: 80px;
+    height: 55px; 
+    text-align: center;
+    display: center;
+}
+</style>
+<body>
+<script>
+var clicks = localStorage.getItem("clicks");
+
+if (clicks === null) {
+var clicks = 0;
+localStorage.setItem("clicks", 0);}
+</script>
+
+<button type="button";
+
+onclick="clicks++;
+localStorage.setItem('clicks', clicks);
+swal(
+         'You Clicked me!',
+         'You have clicked ' + clicks + ' times.',
+         'success');">
+ 
+</button>
+    <br>
+    <br>
+    <a href='projects.html'>My Projects</a>
+    <br>
+    <a href='notes.html'>Personal notes</a>
+    <br>
+    <p>Note: We use cookies. By using this site, you allow us to use cookies.</p>
+    
+</body>
+</head>
+</html>
+
+
+
